@@ -18,6 +18,23 @@
 
 class String
   def caesar(shift)
+  	ret = ""
+  	letters = self.split("")
+  	letters.each do |letter|
+  		asci = letter.ord
+      #only add the shift to letters (no symbols)
+      if( (asci >= 97) && (asci <= 122) )
+    		new_asci = asci + shift
+    		if(new_asci > 122)
+    			new_asci = (new_asci - 122) + 96
+    		end
+    		new_letter = new_asci.chr
+    		ret << new_letter
+      else
+        ret << letter
+      end
+  	end
+  	ret
   end
 end
 
@@ -36,6 +53,36 @@ end
 
 class Hash
   def difference(other_hash)
+    #Returned hash should contain key-values that are in one hash but not the other
+  	ret = {}
+  	hash_one_keys = self.keys
+  	hash_two_keys = other_hash.keys
+
+  	unique_hash_one_keys = get_unique_keys(hash_one_keys, hash_two_keys)
+  	unique_hash_two_keys = get_unique_keys(hash_two_keys, hash_one_keys)
+  	#Cant combine these arrays since you need to know which 
+  	#hashes they belong to
+
+  	#Iterate through each hash, adding the unique ones to ret
+  	unique_hash_one_keys.each do |key|
+  		ret[key] = self[key]
+  	end
+  	unique_hash_two_keys.each do |key|
+  		ret[key] = other_hash[key]
+  	end  
+  	
+  	ret	
+  end
+
+  #get the keys in hash_keys that are not in other_hash_keys
+  def get_unique_keys(hash_keys, other_hash_keys)
+  	unique_keys = []
+  	hash_keys.each do |key|
+  		unless (other_hash_keys.include?(key))
+  			unique_keys << key
+  		end
+  	end 
+  	unique_keys 	
   end
 end
 
@@ -98,6 +145,35 @@ end
 
 class Fixnum
   def stringify(base)
+    #this hash contain the string values of all digits from 0-15 (use a-f for 10-15)
+    #the values from this hash are used to build the answer
+    num_codes = {
+      0 => "0",
+      1 => "1",
+      2 => "2",
+      3 => "3",
+      4 => "4",
+      5 => "5",
+      6 => "6",
+      7 => "7",
+      8 => "8",
+      9 => "9",
+      10 => "a",
+      11 => "b",
+      12 => "c",
+      13 => "d",
+      14 => "e",
+      15 => "f"
+    }
+
+    ret = ""
+    div = 1
+    while (div <= self)
+      ans = (self / div) % base
+      ret << num_codes[ans]
+      div = div * base
+    end
+    ret.reverse
   end
 end
 

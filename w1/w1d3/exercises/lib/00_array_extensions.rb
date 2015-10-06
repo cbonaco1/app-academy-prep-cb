@@ -5,6 +5,7 @@
 
 class Array
   def sum
+    self.inject(0){|sum, num| sum + num}
   end
 end
 
@@ -15,10 +16,17 @@ end
 # method, which mutates the original array.
 
 class Array
+  #Modifies the original by iterating through all elements
+  #and manually re-setting each element at their index
   def square!
+    self.each_with_index do |num, index|
+      self[index] = num**2
+    end
   end
 
+  #map does not modify the receiver
   def square
+    self.map{|num| num**2 }
   end
 end
 
@@ -36,6 +44,13 @@ end
 
 class Array
   def my_uniq
+    ret = []
+    self.each do |item|
+      unless (ret.include?(item))
+        ret << item
+      end
+    end
+    ret
   end
 end
 
@@ -57,6 +72,19 @@ end
 
 class Array
   def two_sum
+    ret = []
+    i = 0
+    while(i < self.length)
+      j = i + 1
+      while (j < self.length)
+        if(self[i] + self[j] == 0)
+          ret << [i, j]
+        end
+        j+=1  
+      end
+      i+=1
+    end
+    ret
   end
 end
 
@@ -69,6 +97,20 @@ end
 
 class Array
   def median
+    self.sort!
+    mid_1 = (self.length / 2)
+    ret = nil
+    if(self.length > 0)
+      #array is of even length
+      if(self.length % 2 == 0)
+        mid_2 = mid_1 - 1
+        ret = (self[mid_1] + self[mid_2]) / 2.0
+      #array is of odd length
+      else
+        ret = self[mid_1]
+      end      
+    end
+    ret
   end
 end
 
@@ -120,9 +162,52 @@ end
 # Don't use the built-in `transpose` method!
 
 class Array
+  #This method implements the bonus of using a non-square matrix
   def my_transpose
-  end
+    ret = []
+
+    #Determine the length of the longest row in the matrix
+    #This is used as the limit for the column index counter
+    max_row_length = 0
+    self.each do |array|
+      if(array.length > max_row_length)
+        max_row_length = array.length
+      end
+    end
+
+    col = 0
+    #column count goes up to the size of the largest row
+    while (col < max_row_length)
+      row = 0
+      ans_row = []
+      while (row < self.length)
+        val = self[row][col]
+        if(val)
+          ans_row << val
+        else
+          #add nil to the returned array if there is no value at the index
+          ans_row << nil
+        end
+        row+=1
+      end
+      ret << ans_row
+      col+=1
+    end
+    ret
+  end  
 end
 
 # Bonus: Refactor your `Array#my_transpose` method to work with any rectangular
 # matrix (not necessarily a square one).
+# Completed using the following example:
+args = [
+    [1, 2, 3],
+    [4, 5],
+    [6, 7, 8, 9]
+]
+#returns
+#[1, 4, 6],
+#[2, 5, 7],
+#[3, nil, 8],
+#[nil, nil, 9]
+#My answer to the bonus places nil in places there may be a row, but no column (and vice versa)
