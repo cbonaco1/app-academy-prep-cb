@@ -18,7 +18,7 @@ def guessing_game
 	guess_count = 1
 
 	until won
-		puts "Please guess a number"
+		puts "Please guess a number #{special_number}"
 		guess = gets.chomp.to_i
 
 		if(guess != special_number)	
@@ -26,7 +26,7 @@ def guessing_game
 			puts "You guessed: #{guess}"
 			if(guess < special_number)
 				puts "too low"
-			else
+			elsif(guess > special_number)
 				puts "too high"
 			end
 		else
