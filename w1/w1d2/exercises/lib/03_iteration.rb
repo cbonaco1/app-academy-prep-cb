@@ -4,6 +4,13 @@
 # factors of a given number.
 
 def factors(num)
+  facts = []
+  for n in 1..num
+    if(num % n == 0)
+      facts << n
+    end
+  end
+  facts
 end
 
 # ### Bubble Sort
@@ -47,11 +54,65 @@ end
 
 class Array
   def bubble_sort!
+    while true
+      swapped = false
+      i = 0
+      while (i < (self.length - 1))
+        current_num = self[i]
+        next_num = self[i+1]
+        #if no block given, do regular comparison
+        unless(block_given?)
+          if(current_num > next_num)
+            swapped = true
+          end
+        else
+          #if block is given, call yield
+          #assuming the block will use the spaceship operator
+          compare = yield(current_num, next_num)
+          if(compare == 1)
+            swapped = true
+          end
+        end
+        #If either of the comparison methods indicated a swap needs to occur, then swap
+        if(swapped)
+          self[i], self[i+1] = self[i+1], self[i]
+        end
+        i+=1
+      end
+      if(swapped == false)
+        break
+      end
+      swapped = false
+    end
+    self
   end
 
-  def bubble_sort(&prc)
+  def bubble_sort
+    dupped_array = self.dup
+    dupped_array.bubble_sort!
+=begin    
+    while true
+      swapped = false
+      i = 0
+      while (i < (dupped_array.length - 1))
+        if(dupped_array[i] > dupped_array[i+1])
+          dupped_array[i], dupped_array[i+1] = dupped_array[i+1], dupped_array[i]
+          swapped = true
+        end
+        i+=1
+      end
+      if(swapped == false)
+        break
+      end
+      swapped = false
+    end
+    dupped_array    
+=end    
   end
+
 end
+#puts [7, 4, 11, 12, 2].bubble_sort
+
 
 # ### Substrings and Subwords
 #
@@ -67,9 +128,27 @@ end
 # words).
 
 def substrings(string)
+  ans = []
+  i = 0
+  while (i < string.length)
+    j = i
+    while (j < string.length)
+      substr = string[i..j]
+      unless ans.include?(string[i..j])
+        ans << substr
+      end
+      j+=1
+    end
+    i+=1
+  end
+  ans
 end
+#puts substrings("hello")
 
 def subwords(word, dictionary)
+  real_substrings = []
+  substrings_returned = substrings(word)
+  substrings_returned.select{|sub| dictionary.include?(sub)}
 end
 
 # ### Doubler
@@ -77,6 +156,7 @@ end
 # array with the original elements multiplied by two.
 
 def doubler(array)
+  array.map{|num| num * 2}
 end
 
 # ### My Each
@@ -101,9 +181,20 @@ end
 #
 # p return_value # => [1, 2, 3]
 # ```
-
 class Array
   def my_each(&prc)
+    #This did not work and im not sure why
+    #for element in self do
+    #  prc.call(element)
+    #end
+
+    i = 0
+    while (i < self.length)
+      prc.call(self[i])
+      i += 1
+    end
+    self
+
   end
 end
 
@@ -122,14 +213,37 @@ end
 
 class Array
   def my_map(&prc)
+    #map returns a new array with the block applied to each element
+    #original is still not modified
+    ret = []
+    self.my_each do |element|
+      ret << proc.call(element)
+    end
+
+    ret
   end
 
   def my_select(&prc)
+    ret = []
+    #if proc returns true, then add element to array to return
+    self.my_each do|element|
+      if(proc.call(element))
+        ret << element
+      end
+    end
+    ret
   end
 
   def my_inject(&blk)
+    accum = self.first
+    for i in (1...self.length)
+      accum = blk.call(accum, self[i])
+    end
+    accum
   end
 end
+
+#puts [1, 2, 3].my_inject { |sum, num| sum + num }
 
 # ### Concatenate
 # Create a method that takes in an `Array` of `String`s and uses `inject`
@@ -141,4 +255,5 @@ end
 # ```
 
 def concatenate(strings)
+  strings.inject(""){|res, word| res + word}
 end

@@ -36,7 +36,6 @@ end
 def titleize(sentence)
 	ret = ""
 	words = sentence.split(" ")
-	num_words = words.length
 
 	#These are the words NOT to be capitalized if they are not the first word
 	#The test case includes over as a little_word

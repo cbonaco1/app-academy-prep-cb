@@ -33,7 +33,7 @@ class Dictionary
 
   #returns true/false if the keyword exists in the dictionary
   def include?(keywordIn)
-  	@keywords.include?(keywordIn) ? true : false
+  	@keywords.include?(keywordIn)
   end
 
   #returns key-value pair of keywords in entries which contain keywordIn
@@ -46,9 +46,11 @@ class Dictionary
   #in alphabetical order
   #TO-DO: ask about this - not sure what format theyre expecting
   def printable
+    ret = ""
   	self.keywords.each do |keyword|
-      puts %Q{[#{keyword}] \'#{@entries[keyword]}\'}
+      ret += %Q{[#{keyword}] \"#{@entries[keyword]}\"\n}
     end
+    ret.chomp
   end
 end
 
