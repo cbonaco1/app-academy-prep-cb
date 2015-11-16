@@ -176,30 +176,3 @@ class Board
 	end
 
 end
-
-board = Board.new
-board.place_mark([0, 0], :X)
-board.place_mark([2, 2], :X)
-board.place_mark([1, 1], :X)
-#board.place_mark([0, 2], :X)
-#board.place_mark([0, 2], :O)
-#board.place_mark([1, 2], :O)
-
-#board.place_mark([0, 2], :O)
-#board.place_mark([1, 2], :O)
-#board.place_mark([2, 2], :O)
-p board.check_left_diag
-
-
-#p board.empty_board?
-#p board.winner
-
-other_board = Board.new
-[[0, 0], [0, 1]].each do |pos|
-	other_board.place_mark(pos, :X)
-end
-[[0, 2]].each do |pos|
-	other_board.place_mark(pos, :O)
-end
-#p "Empty? #{other_board.empty_board?}"
-#p "Winner? #{other_board.winner}"

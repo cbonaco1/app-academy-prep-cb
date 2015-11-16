@@ -47,7 +47,6 @@ class TowersOfHanoi
 
 	def play
 		until won?
-
 			#prompt user what pile to select from
 			#this is the index of a tower in towers array
 			puts "Enter tower to move FROM: "
@@ -64,10 +63,8 @@ class TowersOfHanoi
 			else
 				puts "Invalid move, please enter again"
 			end
-			
 		end
 		puts "You won!"
-
 	end
 
 	def render
@@ -108,5 +105,3 @@ class TowersOfHanoi
 		towers[to_tower] << disk_to_move		
 	end
 end
-
-TowersOfHanoi.new.play

@@ -11,12 +11,15 @@ class Board
 	end
 
 	#Adding syntactic sugar in order to access points in grid easier
-	def [](row, col)
-		@grid[row][col]
+	#def [](row, col)
+	#	@grid[row][col]
+	#end
+	def [](points)
+		@grid[points[0]][points[1]]
 	end
 
-	def []=(row, col, mark)
-		@grid[row][col] = mark
+	def []=(position, mark)
+		@grid[position[0]][position[1]] = mark
 	end
 
 	def length
@@ -47,19 +50,15 @@ class Board
 	#If no position given, check if grid contains any ships
 	def empty?(position=nil)
 		if (position)
-			self[*position].nil?
+			self[position].nil?
 		else
 			(self.count > 0) ? false : true
 		end
 	end
 
 	def place_mark(position)
-		#x, y = position
-		#puts "Enter Board's place_mark: X=#{x}, Y=#{y}"
-		#@grid[position[0]][position[1]] = :x
-		#if( (self[*position] == :s) || (self[*position].nil?) )
-		if(self[*position] == :s)
-			self[*position] = :x
+		if( (self[position] == :s) || (self[position].nil?) )
+			self[position] = :x
 		else
 			raise "This position is already marked!"
 		end
@@ -69,7 +68,6 @@ class Board
 	#If row is squre and board is full, 
 	#then number of ships equals (rows * rows)
 	def full?
-		#grid_size = self.grid.length
 		grid_size = self.length
 		expected_ship_count = grid_size * grid_size
 		actual_ship_count = self.count
@@ -118,21 +116,4 @@ class Board
 	def in_range?(pos)
 	end
 
-end
-
-if __FILE__ == $PROGRAM_NAME
-	board = Board.new(Array.new(3) { Array.new(3) })
-	#board = Board.new
-	board.populate_grid
-	board.place_mark([1, 1])
-	board.place_mark([1, 0])
-	board.display
-
-
-	#full_board.place_random_ship
-
-	#until board.full?
-	#	board.place_random_ship
-	#end
-	
 end

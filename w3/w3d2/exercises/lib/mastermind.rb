@@ -139,15 +139,3 @@ class Game
     end
   end
 end
-
-
-if __FILE__ == $PROGRAM_NAME
-  #blue_code = Code.new("bbbb".split(""))
-  #orange_code = Code.new("oooo".split(""))
-  code1 = Code.new("yybb".split(""))
-  code2 = Code.new("bbob".split(""))
-
-  #puts code2.near_matches(code1)
-  game = Game.new
-  game.play
-end

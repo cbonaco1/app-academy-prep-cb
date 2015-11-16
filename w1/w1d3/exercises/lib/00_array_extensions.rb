@@ -101,11 +101,9 @@ class Array
     mid_1 = (self.length / 2)
     ret = nil
     if(self.length > 0)
-      #array is of even length
       if(self.length % 2 == 0)
         mid_2 = mid_1 - 1
         ret = (self[mid_1] + self[mid_2]) / 2.0
-      #array is of odd length
       else
         ret = self[mid_1]
       end      
@@ -205,7 +203,7 @@ args = [
     [4, 5],
     [6, 7, 8, 9]
 ]
-#returns
+#args.my_transpose returns
 #[1, 4, 6],
 #[2, 5, 7],
 #[3, nil, 8],

@@ -47,11 +47,3 @@ class BattleshipGame
   end
 
 end
-
-if __FILE__ == $PROGRAM_NAME
-  board = Board.new(Array.new(3) { Array.new(3) })
-  human_player = HumanPlayer.new
-  pc = ComputerPlayer.new(board)
-  game = BattleshipGame.new(pc, board)
-  game.play
-end

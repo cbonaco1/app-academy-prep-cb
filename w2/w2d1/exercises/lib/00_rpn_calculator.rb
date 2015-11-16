@@ -133,6 +133,7 @@ if __FILE__ == $PROGRAM_NAME
   #read each operand and operator from standard input
   #until user presses Enter on a blank line
   if (file_name.nil?)
+    puts "Enter each number and operand, then Enter on a blank line to stop:"
     expression = ""
     token = gets.chomp
     while (token.length > 0)

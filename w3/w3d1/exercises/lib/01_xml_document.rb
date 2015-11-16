@@ -1,73 +1,62 @@
 class XmlDocument
   @@num_spaces = -2
-  attr_accessor :indents
+  attr_accessor :indents, :spaces
   def initialize(indents=false)
   	@indents = indents
+    @spaces = 0
   end
 
   def send(tag_name, attributes={}, &block)
-    num_spaces = 0
-    puts "Spaces == #{num_spaces}"
+    xml = ""
   	if(block_given?)
-      block_result = block.call
-  		return "#{spaces(num_spaces)}<#{tag_name}>#{new_line?}" + 
-  				   "#{spaces(num_spaces)}#{block_result}#{new_line?}" +
-  				   "#{spaces(num_spaces)}</#{tag_name}>#{new_line?}"
+  		xml << "#{open_tag(tag_name)}"
+      indent
+      xml << "#{block.call}"
+      unindent
+      xml << "#{closing_tag(tag_name)}"
   	else
-	  	if(attributes.empty?)
-	  		return "<#{tag_name}/>#{new_line?}"
-	  	else
-        attribute_str = ""
-        attributes.each do |attr, value|
-          attribute_str += "#{attr}=\"#{value}\" "
-        end 
-        return "<#{tag_name} #{attribute_str.strip}/>#{new_line?}"      
-	  	end  		
+      xml << lone_tag(tag_name, attributes)       		
   	end
+    xml
   end
-
 
   def method_missing(method_name, arguments={}, &block)
-  	send(method_name, arguments, &block)
+    send(method_name, arguments, &block)
   end
 
-  def indent?
-    space = ""
-    if(@indents)
-      @@spaces.times do 
-        space += " "
-      end
-    end
-    #puts "Returning --#{space}--"
-    space
+  def open_tag(name)
+    "#{tab}<#{name}>#{new_line?}"
+  end
+
+  def closing_tag(name)
+    "#{tab}</#{name}>#{new_line?}"
+  end
+
+  def lone_tag(name, attrs={})
+    body = ([name] + attribute_string(attrs)).join(" ")
+    "#{tab}<#{body}/>#{new_line?}"
+  end
+
+  #Take a Hash of the attributes and return an Array
+  #with each element being key="value"
+  def attribute_string(attributes)
+    attributes.map { |name, value| "#{name}=\"#{value}\""  }
+  end
+
+  def indent
+    @spaces += 2 if @indents
+  end
+
+  def unindent
+    @spaces -= 2 if @indents
   end
 
   def new_line?
     @indents ? "\n" : ""
   end
 
-  def spaces(num_spaces)
-    ret = ""
-    num_spaces.times do
-      ret << "-"
-    end
-    ret
+  def tab
+    " " * @spaces
   end
 
 end
-
-xml =XmlDocument.new(true)
-puts xml.send("Hello")
-puts xml.goodbye
-puts xml.hello(:name => "dolly", :class => "test", :id => "new_field")
-puts xml.hello { "dolly" }
-puts "------"
-
-#xml_string = xml.hello do
-  xml_string = xml.goodbye do
-    xml.come_back do
-      xml.hello(:name => "dolly")
-    end
- end
-#end
-puts xml_string

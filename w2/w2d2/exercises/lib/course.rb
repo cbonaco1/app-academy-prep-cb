@@ -61,8 +61,6 @@ class Course
 	#add a student to the class.
 	#Can use Student.enroll	
 	def add_student(student)
-		#puts "Adding student #{student.name} to #{self.name}"
-		#@students.push(student)
 		student.enroll(self)
 	end
 end

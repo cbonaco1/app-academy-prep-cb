@@ -27,7 +27,6 @@ class Student
 	#Should ignore attempts to re-enroll students 
 	#(if a Student is already enrolled in a course, then do nothing)
 	def enroll(course)
-		#puts "Enrolling #{self.name} in #{course.name}"
 		unless @courses.include?(course)
 			@courses.push(course) 
 			course.students << self

@@ -21,8 +21,7 @@ class Game
 
 	def play_turn
 		position = @current_player.get_move
-		#Not sure how to get the mark the user wants at the position
-		#Hard-coding it to :X
+		#Hard-coding the mark the user wants at the position to :X
 		board.place_mark(position, :X)
 		switch_players!
 	end

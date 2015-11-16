@@ -50,7 +50,6 @@ class Hangman
   	end
   	print "\n"
   end
-
 end
 
 class HumanPlayer
@@ -170,27 +169,4 @@ class ComputerPlayer
 		matching_indices = check_guess(guess)
 		(indices == matching_indices) ? true : false		
 	end
-end
-
-if __FILE__ == $PROGRAM_NAME
-	dictionary = File.readlines("dictionary.txt")
-	#readlines adds a \n character to each word
-	#This throws off the length of the word, which is used in game
-	dictionary = dictionary.map { |word| word.chomp  }
-
-
-	words = ["reel","keel","meet", "hello", "bye", "hell", "llama"]
-
-	pc_player = ComputerPlayer.new(dictionary)
-	#pc_player.register_secret_length(4)
-	#board = [nil, "e", "e", nil]
-	#puts pc_player.guess(board)
-
-	human_player = HumanPlayer.new
-	players = {guesser: human_player, referee: pc_player}
-	game = Hangman.new(players)
-
-	#puts "Secret word: #{pc_guesser.secret_word}, #{pc_guesser.pick_secret_word}"
-	#puts "#{pc_guesser.secret_word.split("")}"
-	game.play
 end

@@ -61,7 +61,7 @@ class Hash
   	unique_hash_one_keys = get_unique_keys(hash_one_keys, hash_two_keys)
   	unique_hash_two_keys = get_unique_keys(hash_two_keys, hash_one_keys)
   	#Cant combine these arrays since you need to know which 
-  	#hashes they belong to
+  	#hashes they belong to in order to get the value at that key
 
   	#Iterate through each hash, adding the unique ones to ret
   	unique_hash_one_keys.each do |key|

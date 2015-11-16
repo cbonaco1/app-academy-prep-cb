@@ -67,7 +67,7 @@ class Array
           end
         else
           #if block is given, call yield
-          #assuming the block will use the spaceship operator
+          #**assuming the block will use the spaceship operator**
           compare = yield(current_num, next_num)
           if(compare == 1)
             swapped = true
@@ -89,29 +89,10 @@ class Array
 
   def bubble_sort
     dupped_array = self.dup
-    dupped_array.bubble_sort!
-=begin    
-    while true
-      swapped = false
-      i = 0
-      while (i < (dupped_array.length - 1))
-        if(dupped_array[i] > dupped_array[i+1])
-          dupped_array[i], dupped_array[i+1] = dupped_array[i+1], dupped_array[i]
-          swapped = true
-        end
-        i+=1
-      end
-      if(swapped == false)
-        break
-      end
-      swapped = false
-    end
-    dupped_array    
-=end    
+    dupped_array.bubble_sort!    
   end
 
 end
-#puts [7, 4, 11, 12, 2].bubble_sort
 
 
 # ### Substrings and Subwords

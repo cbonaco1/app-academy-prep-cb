@@ -119,7 +119,3 @@ end
 def determine_rest(number, unit)
 	number - ((number / unit) * unit)
 end
-
-if __FILE__ == $PROGRAM_NAME
-	puts 1_888_259_040_036.in_words
-end

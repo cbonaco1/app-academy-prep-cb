@@ -73,7 +73,6 @@ class MyHashSet
 		ret = MyHashSet.new
 		elements = self.to_a + set2.to_a
 		repeated_elements = elements.select{|el| elements.count(el) > 1}
-		#repeated_elements.uniq
 		repeated_elements.each do |el|
 			unless ret.include?(el)
 				ret.insert(el)
@@ -94,7 +93,8 @@ class MyHashSet
 		ret
 	end
 	
-	#return the elements contained in either `set1` or `set2`, but not both!
+	#Bonus question
+	#return the elements contained in either `set1` or `set2`, but not both
 	def symmetric_difference(set2)
 		ret = MyHashSet.new
 		elements = self.to_a + set2.to_a
@@ -108,6 +108,7 @@ class MyHashSet
 		ret
 	end
 
+	#Bonus question
 	# return true if `object` is a `MyHashSet`, 
 	# has the same size as `set1`, and every member of
 	# `object` is a member of `set1`.

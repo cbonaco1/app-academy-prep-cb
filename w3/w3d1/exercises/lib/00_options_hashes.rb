@@ -35,7 +35,3 @@ def transmogrify(str, options={})
 	end
 	new_str
 end
-
-word = "foo "
-options = { times: 3, upcase: true, reverse: true }
-puts transmogrify(word, options)

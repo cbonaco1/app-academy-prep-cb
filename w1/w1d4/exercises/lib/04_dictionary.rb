@@ -44,7 +44,6 @@ class Dictionary
 
   #prints out all the keywords->definitions like so: [keyword] 'definition'
   #in alphabetical order
-  #TO-DO: ask about this - not sure what format theyre expecting
   def printable
     ret = ""
   	self.keywords.each do |keyword|
@@ -53,9 +52,3 @@ class Dictionary
     ret.chomp
   end
 end
-
-d = Dictionary.new
-d.add("zebra" => "African land animal with stripes")
-d.add("fish" => "aquatic animal")
-d.add("apple" => "fruit")
-d.printable
